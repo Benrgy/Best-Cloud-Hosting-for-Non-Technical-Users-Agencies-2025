@@ -56,20 +56,9 @@ const Auth = () => {
       if (error) throw error;
 
       if (data.user) {
-        // Create profile
-        const { error: profileError } = await supabase
-          .from("profiles")
-          .insert({
-            user_id: data.user.id,
-            email: data.user.email!,
-            full_name: fullName,
-          });
-
-        if (profileError) throw profileError;
-
         toast({
           title: "Account created!",
-          description: "You have successfully signed up.",
+          description: "You have successfully signed up. Profile creation is handled automatically.",
         });
       }
     } catch (error: any) {

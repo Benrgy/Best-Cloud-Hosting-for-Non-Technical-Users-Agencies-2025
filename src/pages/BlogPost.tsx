@@ -5,8 +5,9 @@ import { Calendar, Tag, ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
+import DOMPurify from "dompurify";
 
 interface BlogPost {
   id: string;
@@ -80,6 +81,15 @@ const BlogPost = () => {
   const seoTitle = post.meta_title || `${post.title} - CloudHost Blog`;
   const seoDescription = post.meta_description || post.excerpt || `Read "${post.title}" on CloudHost - expert insights and professional advice.`;
   const canonicalUrl = `${window.location.origin}/blog/${post.slug}`;
+  
+  // Sanitize HTML content to prevent XSS attacks
+  const sanitizedContent = useMemo(() => {
+    return DOMPurify.sanitize(post.content, {
+      ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'img', 'blockquote', 'code', 'pre'],
+      ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class'],
+      ALLOW_DATA_ATTR: false,
+    });
+  }, [post.content]);
 
   return (
     <>
@@ -179,7 +189,7 @@ const BlogPost = () => {
 
           <div 
             className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-bold prose-a:text-primary prose-img:rounded-lg"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
           />
 
           <div className="mt-12 pt-8 border-t">
