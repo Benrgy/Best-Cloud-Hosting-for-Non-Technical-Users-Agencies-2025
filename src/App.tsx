@@ -14,6 +14,13 @@ import Posts from "./pages/admin/Posts";
 import PostEditor from "./pages/admin/PostEditor";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AffiliateDisclosure from "./pages/AffiliateDisclosure";
+import EditorialPolicy from "./pages/EditorialPolicy";
+import TestingMethodology from "./pages/TestingMethodology";
+import Benefits from "./pages/Benefits";
+import CloudHostingGuide from "./pages/CloudHostingGuide";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +61,13 @@ const App = () => (
                   </ProtectedRoute>
                 }
               />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/affiliate-disclosure" element={<AffiliateDisclosure />} />
+              <Route path="/editorial-policy" element={<EditorialPolicy />} />
+              <Route path="/testing-methodology" element={<TestingMethodology />} />
+              <Route path="/benefits" element={<Benefits />} />
+              <Route path="/cloud-hosting-guide" element={<CloudHostingGuide />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
